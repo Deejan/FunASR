@@ -1,7 +1,7 @@
-([English](./README.md)|简体中文|[日本語](./README_ja.md)|[한국어](./README_ko.md))
+([English](./README.md)|简体中文|[日本語](./README_ja.md)|[한국어](./README_ko.md))
 
 <p align="center">
-<a href="https://github.com/modelscope/FunASR"><img src="https://svg-banners.vercel.app/api?type=origin&text1=FunASR🤠&text2=💖%20A%20Fundamental%20End-to-End%20Speech%20Recognition%20Toolkit&width=800&height=210" alt="FunASR"></a>
+<a href="https://github.com/Deejan/FunASR"><img src="https://svg-banners.vercel.app/api?type=origin&text1=FunASR🤠&text2=💖%20A%20Fundamental%20End-to-End%20Speech%20Recognition%20Toolkit&width=800&height=210" alt="FunASR"></a>
 </p>
 
 <p align="center">
@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://pypi.org/project/funasr/"><img src="https://img.shields.io/pypi/v/funasr" alt="PyPI"></a>
-  <a href="https://github.com/modelscope/FunASR"><img src="https://img.shields.io/github/stars/modelscope/FunASR?style=social" alt="Stars"></a>
+  <a href="https://github.com/Deejan/FunASR"><img src="https://img.shields.io/github/stars/Deejan/FunASR?style=social" alt="Stars"></a>
   <a href="https://pypi.org/project/funasr/"><img src="https://img.shields.io/pypi/dm/funasr" alt="Downloads"></a>
   <a href="https://modelscope.github.io/FunASR/zh/"><img src="https://img.shields.io/badge/文档-在线-blue" alt="Docs"></a>
 </p>
@@ -28,7 +28,7 @@
 
 ## 快速开始
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/modelscope/FunASR/blob/main/examples/colab/funasr_quickstart.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Deejan/FunASR/blob/main/examples/colab/funasr_quickstart.ipynb)
 
 不想先配置本地环境？可以打开 [Colab 快速体验](./examples/colab/README_zh.md) 在浏览器里转写公开样例或上传自己的音频。
 
@@ -140,7 +140,7 @@ pip install funasr
 <details><summary>从源码安装</summary>
 
 ```bash
-git clone https://github.com/modelscope/FunASR.git && cd FunASR
+git clone https://github.com/Deejan/FunASR.git && cd FunASR
 pip install -e ./
 ```
 环境要求：Python ≥ 3.8、PyTorch ≥ 1.13、torchaudio
@@ -163,10 +163,10 @@ pip install -e ./
 | GLM-ASR-Nano | 识别，17 种语言 | 多语言 | 1.5B | [使用](examples/industrial_data_pretraining/glm_asr) |
 | Whisper-large-v3 | 识别 + 翻译 | 多语言 | 1550M | [使用](examples/industrial_data_pretraining/whisper) |
 | Whisper-large-v3-turbo | 识别 + 翻译 | 多语言 | 809M | [使用](examples/industrial_data_pretraining/whisper) |
-| ct-punc | 标点恢复 | 中/英 | 290M | [⭐](https://modelscope.cn/models/damo/punc_ct-transformer_cn-en-common-vocab471067-large/summary) [🤗](https://huggingface.co/funasr/ct-punc) |
-| fsmn-vad | 语音检测 | 中/英 | 0.4M | [⭐](https://modelscope.cn/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/summary) [🤗](https://huggingface.co/funasr/fsmn-vad) |
-| cam++ | 说话人分离 | — | 7.2M | [⭐](https://modelscope.cn/models/iic/speech_campplus_sv_zh-cn_16k-common/summary) [🤗](https://huggingface.co/funasr/campplus) |
-| emotion2vec+large | 情感识别 | — | 300M | [⭐](https://modelscope.cn/models/iic/emotion2vec_plus_large/summary) [🤗](https://huggingface.co/emotion2vec/emotion2vec_plus_large) |
+| ct-punc | 标点恢复 | 中/英 | 290M | [⭐](https://www.modelscope.cn/models/damo/punc_ct-transformer_cn-en-common-vocab471067-large/summary) [🤗](https://huggingface.co/funasr/ct-punc) |
+| fsmn-vad | 语音检测 | 中/英 | 0.4M | [⭐](https://www.modelscope.cn/models/damo/speech_fsmn_vad_zh-cn-16k-common-pytorch/summary) [🤗](https://huggingface.co/funasr/fsmn-vad) |
+| cam++ | 说话人分离 | — | 7.2M | [⭐](https://www.modelscope.cn/models/iic/speech_campplus_sv_zh-cn_16k-common/summary) [🤗](https://huggingface.co/funasr/campplus) |
+| emotion2vec+large | 情感识别 | — | 300M | [⭐](https://www.modelscope.cn/models/iic/emotion2vec_plus_large/summary) [🤗](https://huggingface.co/emotion2vec/emotion2vec_plus_large) |
 
 ---
 
@@ -198,87 +198,94 @@ result = model.generate(input="audio.wav", granularity="utterance")
 ### 命令行工具（Agent 友好）
 
 ```bash
-# 转写音频（最简用法）
-funasr audio.wav
+# 识别音频文件
+funasr modelscope/SenseVoiceSmall ./audio.wav
 
-# JSON 输出（适合 AI Agent 调用）
-funasr audio.wav --output-format json
+# 实时流式麦克风识别
+funasr modelscope/SenseVoiceSmall --stream true --hotword "公司名 关键词"
 
-# 生成 SRT 字幕
-funasr audio.wav --output-format srt --output-dir ./subs
-
-# 说话人分离 + 时间戳
-funasr audio.wav --spk --timestamps -f json
-
-# 指定模型和语言
-funasr audio.wav --model paraformer --language zh
-
-# 批量转写
-funasr *.wav --output-format srt --output-dir ./output
+# 部署为 API 服务
+funasr-server --model-name SenseVoiceSmall --device cuda
 ```
 
-可用模型：`sensevoice`（默认）、`paraformer`、`paraformer-en`、`fun-asr-nano`
+### OpenAI 兼容 API
 
+```bash
+funasr-server --device cuda
+```
+
+```python
+from openai import OpenAI
+
+client = OpenAI(api_key="dummy", base_url="http://localhost:8000/v1")
+audio_file = open("meeting.wav", "rb")
+transcript = client.audio.transcriptions.create(
+    model="SenseVoiceSmall",
+    file=audio_file,
+    response_format="verbose_json",
+    timestamp_granularities=["word"],
+)
+```
+
+### MCP 服务（AI Agent 集成）
+
+> Claude / Cursor 等 Agent 可直接调用 FunASR。
+
+```bash
+python examples/mcp_server/funasr_mcp_server.py --device cuda
+```
+
+### 微信机器人（FunAudioLLM/Sherpa）
+
+```bash
+python examples/robot/chatbot/paraformer-zh/run.py --port 8080
+```
 
 ---
 
-## 部署
+## 项目结构
 
-```bash
-# OpenAI 兼容 API（推荐）
-pip install funasr fastapi uvicorn python-multipart
-funasr-server --model sensevoice --device cuda
-# → POST /v1/audio/transcriptions，地址 localhost:8000
 ```
-
-使用公开样例音频验证服务：
-
-```bash
-curl -L https://isv-data.oss-cn-hangzhou.aliyuncs.com/ics/MaaS/ASR/test_audio/BAC009S0764W0121.wav -o sample.wav
-curl http://localhost:8000/v1/audio/transcriptions \
-  -F file=@sample.wav \
-  -F model=sensevoice \
-  -F response_format=verbose_json
+FunASR/
+├── funasr/                  # 核心推理包
+│   ├── auto/                # AutoModel 自动加载
+│   ├── runtime/             # 部署相关（C++/Go/onnxruntime）
+│   └── models/              # 模型定义
+├── examples/                # 示例代码
+│   ├── colab/               # Google Colab 快速体验
+│   ├── industrial_data_pretraining/   # 各模型使用示例
+│   ├── openai_api/          # OpenAI 兼容接口
+│   ├── mcp_server/          # MCP 服务
+│   └── migration/           # 从 Whisper 迁移
+├── docs/                    # 文档
+└── tests/                   # 测试
 ```
-
-```bash
-# Docker 流式服务
-docker pull registry.cn-hangzhou.aliyuncs.com/funasr_repo/funasr:funasr-runtime-sdk-online-cpu-0.1.12
-```
-
-[OpenAI API 示例 →](./examples/openai_api/README_zh.md) · [Gradio Demo →](./examples/openai_api/GRADIO_zh.md) · [客户端配方 →](./examples/openai_api/CLIENTS.md) · [JavaScript/TypeScript 配方 →](./examples/openai_api/JAVASCRIPT_zh.md) · [Kubernetes 模板 →](./examples/openai_api/kubernetes/README_zh.md) · [工作流配方 →](./examples/openai_api/WORKFLOWS_zh.md) · [Postman 集合 →](./examples/openai_api/POSTMAN_zh.md) · [OpenAPI 规范 →](./examples/openai_api/OPENAPI_zh.md) · [安全指南 →](./examples/openai_api/SECURITY_zh.md) · [部署选型 →](./docs/deployment_matrix_zh.md) · [部署文档 →](./runtime/readme_cn.md) · [Agent 集成 →](https://modelscope.github.io/FunASR/agent.html)
 
 ---
 
-## 社区
+## 部署方式
 
-|  |  |
-|---|---|
-| 📖 [文档](https://modelscope.github.io/FunASR/zh/) | 🐛 [问题反馈](https://github.com/modelscope/FunASR/issues) |
-| 💬 [讨论](https://github.com/modelscope/FunASR/discussions) | 🤗 [HuggingFace](https://huggingface.co/funasr) |
-| 🤝 [贡献指南](./CONTRIBUTING.md) | 📈 [20k 增长计划](./docs/community_growth_20k.md) |
+| 场景 | 方案 |
+|------|------|
+| Python 快速推理 | `pip install funasr` + `AutoModel` |
+| 服务化部署 | `funasr-server --device cuda` → REST API |
+| 私有云 / Docker | onnxruntime / tensorrt 加速镜像 |
+| 移动端 / 嵌入式 | Sherpa-ncnn（轻量） |
+| AI Agent 调用 | MCP Server / OpenAI API |
+| 微信 / IM 机器人 | FunAudioLLM/Sherpa + 微信框架 |
 
-## Star 趋势
+> 完整部署矩阵：[deployment_matrix_zh.md](docs/deployment_matrix_zh.md)
 
-<a href="https://star-history.com/#modelscope/FunASR&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=modelscope/FunASR&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=modelscope/FunASR&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=modelscope/FunASR&type=Date" width="600" />
- </picture>
-</a>
+---
 
 ## 许可证
 
-[MIT License](./LICENSE)
+MIT License（核心代码） | Apache 2.0（部分模型权重）
 
-## 引用
+---
 
-```bibtex
-@inproceedings{gao2023funasr,
-  author={Zhifu Gao and others},
-  title={FunASR: A Fundamental End-to-End Speech Recognition Toolkit},
-  booktitle={INTERSPEECH},
-  year={2023}
-}
-```
+<p align="center">
+  <a href="https://github.com/Deejan/FunASR">🦞 本 Fork 仓库</a> ·
+  <a href="https://github.com/modelscope/FunASR">⭐ 原始仓库</a> ·
+  <a href="https://modelscope.github.io/FunASR/zh/">📖 文档</a>
+</p>
